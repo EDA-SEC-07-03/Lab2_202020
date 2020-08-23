@@ -14,42 +14,30 @@ def cmpfunction (element1, element2):
 
 
 @pytest.fixture
-def lst ():
+def lst (file="Data/GoodReads/books-small.csv", sep=";"):
     lst = slt.newList(cmpfunction)
-    return lst
-
-@pytest.fixture
-def books (file="Data/GoodReads/books-small.csv",sep=";"):
-    books = slt.newList()
     dialect = csv.excel()
     dialect.delimiter=sep
     try:
         with open(file, encoding="utf-8") as csvfile:
             spamreader = csv.DictReader(csvfile, dialect=dialect)
             for row in spamreader: 
-                slt.addLast(books,row)
+                slt.addLast(lst,row)
     except:
         print("Hubo un error con la carga del archivo")
-    return books
-
-@pytest.fixture
-def lstbooks(books):
-    lst = slt.newList(cmpfunction)
-    for i in range(0,5):    
-        slt.addLast(lst,books[i])    
     return lst
 
 
 
-def test_empty (lst):
-    assert slt.isEmpty(lst) == True
-    assert slt.size(lst) == 0
+def test_no_empty (lst):
+    assert slt.isEmpty(lst) == False
+    assert slt.size(lst) > 0
 
 
 
 def test_addFirst (lst, books):
-    assert slt.isEmpty(lst) == True
-    assert slt.size(lst) == 0
+    assert slt.isEmpty(lst) == False
+    assert slt.size(lst) > 0
     slt.addFirst (lst, books[1])
     assert slt.size(lst) == 1
     slt.addFirst (lst, books[2])
@@ -60,7 +48,7 @@ def test_addFirst (lst, books):
 
 
 
-def test_addLast(lst, books):
+def test_addLast (lst, books):
     assert slt.isEmpty(lst) == True
     assert slt.size(lst) == 0
     slt.addLast (lst, books[1])
