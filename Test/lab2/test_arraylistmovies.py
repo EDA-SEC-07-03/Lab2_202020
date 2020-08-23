@@ -1,38 +1,8 @@
-import pytest
-from DataStructures import liststructure as slt
-from time import process_time 
+import pytest 
+import config 
 import csv
+from DataStructures import arraylist as slt
 
-@pytest.fixture
-def loadCSVFile (file="Data/books-small.csv", sep=";"):
-    """
-    Carga un archivo csv a una lista
-    Args:
-        file
-            Archivo csv del cual se importaran los datos
-        sep = ";"
-            Separador utilizado para determinar cada objeto dentro del archivo
-        Try:
-        Intenta cargar el archivo CSV a la lista que se le pasa por parametro, si encuentra algun error
-        Borra la lista e informa al usuario
-    Returns: None  
-    """
-    #lst = lt.newList("ARRAY_LIST") #Usando implementacion arraylist
-    lst = slt.newList("ARRAY_LIST") #Usando implementacion linkedlist
-    print("Cargando archivo ....")
-    t1_start = process_time() #tiempo inicial
-    dialect = csv.excel()
-    dialect.delimiter=sep
-    try:
-        with open(file, encoding="utf-8") as csvfile:
-            spamreader = csv.DictReader(csvfile, dialect=dialect)
-            for row in spamreader: 
-                slt.addLast(lst,row)
-    except:
-        print("Hubo un error con la carga del archivo")
-    t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
-    return lst
 
 def cmpfunction (element1, element2):
     if element1["book_id"] == element2["book_id"]:
@@ -48,18 +18,19 @@ def lst ():
     lst = slt.newList(cmpfunction)
     return lst
 
-
 @pytest.fixture
-def books ():
-    books = []
-    books.append({'book_id':'1', 'book_title':'Title 1', 'author':'author 1'})
-    books.append({'book_id':'2', 'book_title':'Title 2', 'author':'author 2'})
-    books.append({'book_id':'3', 'book_title':'Title 3', 'author':'author 3'})
-    books.append({'book_id':'4', 'book_title':'Title 4', 'author':'author 4'})
-    books.append({'book_id':'5', 'book_title':'Title 5', 'author':'author 5'})
-    print (books[0])
+def books (file="Data/GoodReads/books-small.csv",sep=";"):
+    books = slt.newList()
+    dialect = csv.excel()
+    dialect.delimiter=sep
+    try:
+        with open(file, encoding="utf-8") as csvfile:
+            spamreader = csv.DictReader(csvfile, dialect=dialect)
+            for row in spamreader: 
+                slt.addLast(books,row)
+    except:
+        print("Hubo un error con la carga del archivo")
     return books
-
 
 @pytest.fixture
 def lstbooks(books):
@@ -89,7 +60,7 @@ def test_addFirst (lst, books):
 
 
 
-def test_addLast (lst, books):
+def test_addLast(lst, books):
     assert slt.isEmpty(lst) == True
     assert slt.size(lst) == 0
     slt.addLast (lst, books[1])
@@ -180,6 +151,3 @@ def test_exchange (lstbooks, books):
     slt.exchange (lstbooks, 1, 5)
     assert slt.getElement(lstbooks, 1) == book5
     assert slt.getElement(lstbooks, 5) == book1
-
-
-
