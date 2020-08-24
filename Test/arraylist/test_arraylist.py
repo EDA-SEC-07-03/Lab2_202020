@@ -103,8 +103,6 @@ def test_getElement(lstbooks, books):
 
 
 
-
-
 def test_removeFirst (lstbooks, books):
     assert slt.size(lstbooks) == 5
     slt.removeFirst(lstbooks)
