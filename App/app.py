@@ -108,7 +108,7 @@ def countElementsFilteredByColumn(criteria, column, lst):
         print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
     return counter
 
-def countElementsByCriteria(numero : int, lst : list):
+def countElementsByCriteria(numero : int, lst : list, eleccion : str):
     """
     Retorna la cantidad de elementos que cumplen con un criterio para una columna dada
     """
@@ -142,6 +142,7 @@ def countElementsByCriteria(numero : int, lst : list):
         pos_y = pelis_average.index(y)
         malas_pelis.append(pelis_nombres[pos_y])
         del pelis_average[pos_y]
+    
     
 
 def orderElementsByCriteria(function, column, lst, elements):
