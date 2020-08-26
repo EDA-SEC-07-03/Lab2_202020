@@ -142,6 +142,7 @@ def countElementsByCriteria(numero : int, lst : list, eleccion : str):
         pos_y = pelis_average.index(y)
         malas_pelis.append(pelis_nombres[pos_y])
         del pelis_average[pos_y]
+    return buenas_pelis and malas_pelis
     
     
 
