@@ -143,8 +143,7 @@ def countElementsByCriteria(numero : int, lst : list):
         malas_pelis.append(pelis_nombres[pos_y])
         del pelis_average[pos_y]
     
-    buenas_pelis.append(malas_pelis)
-    return buenas_pelis 
+    return "top"+numero+" mejores peliculas"+buenas_pelis+"top"+numero+"peores peliculas"+malas_pelis 
 
 def orderElementsByCriteria(function, column, lst, elements):
     """
